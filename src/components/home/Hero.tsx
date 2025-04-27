@@ -108,7 +108,7 @@ const Hero: React.FC = () => {
             {/* Large Text with 3D effect */}
             <div className="mb-8">
               <motion.h1 
-                className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6"
+                className="text-5xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6"
                 style={{ 
                   textShadow: '3px 3px 6px rgba(0,0,0,0.5)',
                   perspective: "1000px"
@@ -149,7 +149,7 @@ const Hero: React.FC = () => {
 
             {/* Smaller Text with 3D effect */}
             <motion.h2 
-              className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight"
+              className="text-3xl md:text-3xl lg:text-4xl font-bold leading-tight"
               style={{ 
                 textShadow: '3px 3px 6px rgba(0,0,0,0.5)',
                 perspective: "1000px"
