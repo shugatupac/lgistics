@@ -52,34 +52,34 @@ const Hero: React.FC = () => {
       {/* 3D Floating Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div 
-          className="absolute top-[15%] right-[10%]"
+          className="absolute top-[15%] right-[10%] z-10"
           variants={floatingAnimation}
           animate="animate"
-          style={{ filter: "drop-shadow(0 0 15px rgba(59, 130, 246, 0.5))" }}
+          style={{ filter: "drop-shadow(0 0 20px rgba(59, 130, 246, 0.7))" }}
         >
-          <Globe className="w-16 h-16 text-blue-400 opacity-70" />
+          <Globe className="w-10 h-10 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 text-blue-400 opacity-90" />
         </motion.div>
         
         <motion.div 
-          className="absolute bottom-[20%] left-[15%]"
+          className="absolute bottom-[20%] left-[15%] z-10"
           variants={floatingAnimation}
           animate="animate"
           custom={1}
-          style={{ filter: "drop-shadow(0 0 15px rgba(59, 130, 246, 0.5))" }}
+          style={{ filter: "drop-shadow(0 0 20px rgba(59, 130, 246, 0.7))" }}
         >
-          <Package className="w-12 h-12 text-blue-300 opacity-60" />
+          <Package className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 text-blue-300 opacity-80" />
         </motion.div>
         
         <motion.div 
-          className="absolute top-[40%] left-[8%]"
-          variants={rotatingAnimation}
+          className="absolute top-[40%] left-[8%] z-10"
+          variants={floatingAnimation}
           animate="animate"
           style={{ 
             perspective: "1000px",
-            filter: "drop-shadow(0 0 15px rgba(59, 130, 246, 0.5))"
+            filter: "drop-shadow(0 0 20px rgba(59, 130, 246, 0.7))"
           }}
         >
-          <Truck className="w-14 h-14 text-blue-500 opacity-70" />
+          <Truck className="w-10 h-10 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 text-blue-500 opacity-90" />
         </motion.div>
       </div>
       
@@ -97,8 +97,8 @@ const Hero: React.FC = () => {
         }}
       ></motion.div>
 
-      <Container className="relative h-screen flex items-center">
-        <div className="max-w-3xl space-y-8">
+      <Container className="relative h-screen flex items-center justify-center">
+        <div className="max-w-3xl space-y-8 text-center">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -108,7 +108,7 @@ const Hero: React.FC = () => {
             {/* Large Text with 3D effect */}
             <div className="mb-8">
               <motion.h1 
-                className="text-5xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6"
+                className="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight mb-5"
                 style={{ 
                   textShadow: '3px 3px 6px rgba(0,0,0,0.5)',
                   perspective: "1000px"
@@ -209,7 +209,7 @@ const Hero: React.FC = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 3.0 }}
-            className="flex flex-col sm:flex-row gap-4"
+            className="flex flex-col sm:flex-row gap-4 justify-center"
           >
             <Link to="/services">
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
