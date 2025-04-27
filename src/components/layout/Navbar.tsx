@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu } from 'lucide-react'; // Make sure you have lucide-react installed
+import { Menu, Truck } from 'lucide-react'; // Added Truck icon import
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -11,8 +11,9 @@ const Navbar: React.FC = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link to="/" className="text-xl font-bold text-primary">
-              Overnight Logistics
+            <Link to="/" className="flex items-center">
+              <Truck className="h-10 w-10 text-blue-700 mr-2" />
+              <span className="text-2xl font-bold text-blue-700">Overnight Logistics</span>
             </Link>
           </div>
           
@@ -37,7 +38,7 @@ const Navbar: React.FC = () => {
             </div>
           </div>
           
-          {/* Mobile menu button - This is likely what's missing or not displaying correctly */}
+          {/* Mobile menu button */}
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
