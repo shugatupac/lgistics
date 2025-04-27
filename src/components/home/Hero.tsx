@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Package, Globe, Truck } from 'lucide-react';
 import Container from '../ui/Container';
 import Button from '../ui/Button';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 const Hero: React.FC = () => {
   const [displayText, setDisplayText] = useState('');
@@ -19,65 +20,180 @@ const Hero: React.FC = () => {
     }
   }, [currentIndex, fullText]);
 
+  // 3D floating animation variants
+  const floatingAnimation = {
+    animate: {
+      y: [0, -10, 0],
+      transition: {
+        duration: 4,
+        repeat: Infinity,
+        repeatType: "reverse" as const,
+      }
+    }
+  };
+
+  // Rotating animation variants
+  const rotatingAnimation = {
+    animate: {
+      rotateY: [0, 360],
+      transition: {
+        duration: 20,
+        repeat: Infinity,
+        ease: "linear"
+      }
+    }
+  };
+
   return (
     <div className="relative min-h-screen bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900">
       {/* Stronger overlay for better text visibility */}
       <div className="absolute inset-0 bg-black/70"></div>
       
-      {/* Background Image */}
-      <div 
+      {/* 3D Floating Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div 
+          className="absolute top-[15%] right-[10%]"
+          variants={floatingAnimation}
+          animate="animate"
+          style={{ filter: "drop-shadow(0 0 15px rgba(59, 130, 246, 0.5))" }}
+        >
+          <Globe className="w-16 h-16 text-blue-400 opacity-70" />
+        </motion.div>
+        
+        <motion.div 
+          className="absolute bottom-[20%] left-[15%]"
+          variants={floatingAnimation}
+          animate="animate"
+          custom={1}
+          style={{ filter: "drop-shadow(0 0 15px rgba(59, 130, 246, 0.5))" }}
+        >
+          <Package className="w-12 h-12 text-blue-300 opacity-60" />
+        </motion.div>
+        
+        <motion.div 
+          className="absolute top-[40%] left-[8%]"
+          variants={rotatingAnimation}
+          animate="animate"
+          style={{ 
+            perspective: "1000px",
+            filter: "drop-shadow(0 0 15px rgba(59, 130, 246, 0.5))"
+          }}
+        >
+          <Truck className="w-14 h-14 text-blue-500 opacity-70" />
+        </motion.div>
+      </div>
+      
+      {/* Background Image with parallax effect */}
+      <motion.div 
+        initial={{ scale: 1.1 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 10 }}
         className="absolute inset-0 bg-cover bg-center bg-no-repeat" 
         style={{ 
-          backgroundImage: "url('https://images.unsplash.com/photo-1728839470502-59edad620f96?q=80&w=3132&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
+          backgroundImage: "url('https://images.unsplash.com/photo-1688452987587-d38a58f9a405?q=80&w=3269&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
           backgroundPosition: "center",
           backgroundSize: "cover",
           backgroundBlendMode: "overlay",
         }}
-      ></div>
+      ></motion.div>
 
       <Container className="relative h-screen flex items-center">
         <div className="max-w-3xl space-y-8">
-          <div className="space-y-4">
-            {/* Large Text */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="space-y-4"
+          >
+            {/* Large Text with 3D effect */}
             <div className="mb-8">
-              <h1 
+              <motion.h1 
                 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6"
-                style={{ textShadow: '3px 3px 6px rgba(0,0,0,0.5)' }}
+                style={{ 
+                  textShadow: '3px 3px 6px rgba(0,0,0,0.5)',
+                  perspective: "1000px"
+                }}
               >
-                <span className="block text-white animate-fadeInUp opacity-0">
-                  Your Gateway to
-                </span>
-                <span className="block animate-fadeInUp delay-300 opacity-0">
-                  <span className="bg-gradient-to-r from-red-500 to-red-700 text-transparent bg-clip-text">
+                <motion.span 
+                  initial={{ opacity: 0, x: -50, rotateX: 45 }}
+                  animate={{ opacity: 1, x: 0, rotateX: 0 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                  className="block text-white transform-gpu"
+                  style={{ transformStyle: "preserve-3d" }}
+                >
+                  Your Gateway To
+                </motion.span>
+                <motion.span 
+                  initial={{ opacity: 0, x: -50, rotateX: 45 }}
+                  animate={{ opacity: 1, x: 0, rotateX: 0 }}
+                  transition={{ duration: 0.8, delay: 0.6 }}
+                  className="block transform-gpu"
+                  style={{ transformStyle: "preserve-3d" }}
+                >
+                  <span className="bg-gradient-to-r from-blue-700 via-blue-400 to-blue-700 text-transparent bg-clip-text" 
+                        style={{ filter: "drop-shadow(0 5px 15px rgba(59, 130, 246, 0.5))" }}>
                     Global Trade
                   </span>
-                </span>
-                <span className="block text-white animate-fadeInUp delay-600 opacity-0">
+                </motion.span>
+                <motion.span 
+                  initial={{ opacity: 0, y: 30, rotateX: 45 }}
+                  animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                  transition={{ duration: 0.8, delay: 1.0 }}
+                  className="block text-white transform-gpu"
+                  style={{ transformStyle: "preserve-3d" }}
+                >
                   Excellence
-                </span>
-              </h1>
+                </motion.span>
+              </motion.h1>
             </div>
 
-            {/* Smaller Text */}
-            <h2 
+            {/* Smaller Text with 3D effect */}
+            <motion.h2 
               className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight"
-              style={{ textShadow: '3px 3px 6px rgba(0,0,0,0.5)' }}
+              style={{ 
+                textShadow: '3px 3px 6px rgba(0,0,0,0.5)',
+                perspective: "1000px"
+              }}
             >
-              <span className="block text-white animate-fadeInUp delay-900 opacity-0">
+              <motion.span 
+                initial={{ opacity: 0, y: 20, rotateX: 30 }}
+                animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                transition={{ duration: 0.6, delay: 1.4 }}
+                className="block text-white transform-gpu"
+                style={{ transformStyle: "preserve-3d" }}
+              >
                 Streamlined
-              </span>
-              <span className="block animate-fadeInUp delay-1200 opacity-0">
-                <span className="bg-gradient-to-r from-red-500 to-red-900 text-transparent bg-clip-text">
+              </motion.span>
+              <motion.span 
+                initial={{ opacity: 0, y: 20, rotateX: 30 }}
+                animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                transition={{ duration: 0.6, delay: 1.8 }}
+                className="block transform-gpu"
+                style={{ transformStyle: "preserve-3d" }}
+              >
+                <span className="bg-gradient-to-r from-blue-700 via-blue-400 to-blue-700 text-transparent bg-clip-text"
+                      style={{ filter: "drop-shadow(0 5px 15px rgba(59, 130, 246, 0.5))" }}>
                   Customs Clearance
                 </span>
-              </span>
-              <span className="block text-white animate-fadeInUp delay-1500 opacity-0">
+              </motion.span>
+              <motion.span 
+                initial={{ opacity: 0, y: 20, rotateX: 30 }}
+                animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                transition={{ duration: 0.6, delay: 2.2 }}
+                className="block text-white transform-gpu"
+                style={{ transformStyle: "preserve-3d" }}
+              >
                 Solutions
-              </span>
-            </h2>
-          </div>
+              </motion.span>
+            </motion.h2>
+          </motion.div>
           
-          <div className="relative h-20">
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 2.6 }}
+            className="relative h-20"
+          >
             <p 
               className="text-xl text-gray-100 absolute"
               style={{ 
@@ -87,29 +203,40 @@ const Hero: React.FC = () => {
             >
               {displayText}
             </p>
-          </div>
+          </motion.div>
           
-          <div className="flex flex-col sm:flex-row gap-4 animate-[fadeIn_1s_ease-out_1.8s_forwards] opacity-0">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 3.0 }}
+            className="flex flex-col sm:flex-row gap-4"
+          >
             <Link to="/services">
-              <Button 
-                variant="primary" 
-                size="lg" 
-                className="group bg-gradient-to-r from-blue-500 to-cyan-400 text-white border-none hover:from-blue-600 hover:to-cyan-500 transform hover:scale-105 transition-all duration-300"
-              >
-                <span>Our Services</span>
-                <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-              </Button>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button 
+                  variant="primary" 
+                  size="lg" 
+                  className="group bg-gradient-to-r from-blue-500 to-cyan-400 text-white border-none hover:from-blue-600 hover:to-cyan-500 transition-all duration-300"
+                  style={{ boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.5)" }}
+                >
+                  <span>Our Services</span>
+                  <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                </Button>
+              </motion.div>
             </Link>
             <Link to="/contact">
-              <Button 
-                variant="outline" 
-                size="lg" 
-                className="border-2 border-white text-white hover:bg-white/10 transform hover:scale-105 transition-all duration-300"
-              >
-                Contact Us
-              </Button>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button 
+                  variant="outline" 
+                  size="lg" 
+                  className="border-2 border-white text-white hover:bg-white/10 transition-all duration-300"
+                  style={{ boxShadow: "0 10px 25px -5px rgba(255, 255, 255, 0.2)" }}
+                >
+                  Contact Us
+                </Button>
+              </motion.div>
             </Link>
-          </div>
+          </motion.div>
         </div>
       </Container>
     </div>
