@@ -89,15 +89,13 @@ const About: React.FC = () => {
                 description: "We're committed to environmentally responsible logistics practices and reducing our carbon footprint."
               }
             ].map((value, index) => (
-              <AnimatedSection key={index} delay={index * 100} animation="fade-up">
-                <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow h-full">
-                  <div className="bg-teal-50 rounded-full w-16 h-16 flex items-center justify-center mb-6 mx-auto">
-                    {value.icon}
-                  </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4 text-center">{value.title}</h3>
-                  <p className="text-gray-600 text-center">{value.description}</p>
+              <div key={index} className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow h-full">
+                <div className="bg-teal-50 rounded-full w-16 h-16 flex items-center justify-center mb-6 mx-auto">
+                  {value.icon}
                 </div>
-              </AnimatedSection>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4 text-center">{value.title}</h3>
+                <p className="text-gray-600 text-center">{value.description}</p>
+              </div>
             ))}
           </div>
         </AnimatedSection>
@@ -149,24 +147,40 @@ const About: React.FC = () => {
                 position: "VP of Global Customs",
                 image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1961&auto=format&fit=crop",
                 bio: "Elena's expertise in international trade regulations has been instrumental in developing our comprehensive customs clearance solutions."
+              },
+              {
+                name: "David Williams",
+                position: "Chief Technology Officer",
+                image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=1974&auto=format&fit=crop",
+                bio: "David leads our digital transformation initiatives, implementing cutting-edge technologies to enhance our logistics operations and customer experience."
+              },
+              {
+                name: "Sophia Patel",
+                position: "VP of Customer Success",
+                image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1976&auto=format&fit=crop",
+                bio: "Sophia ensures our clients receive exceptional service and support, building long-term partnerships that drive mutual success."
+              },
+              {
+                name: "James Wilson",
+                position: "Global Logistics Director",
+                image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop",
+                bio: "James coordinates our worldwide shipping operations, optimizing routes and ensuring timely delivery across our global network."
               }
             ].map((member, index) => (
-              <AnimatedSection key={index} delay={index * 100} animation="fade-up">
-                <div className="bg-white rounded-lg overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-shadow h-full">
-                  <div className="h-64 overflow-hidden">
-                    <img 
-                      src={member.image} 
-                      alt={member.name} 
-                      className="w-full h-full object-cover object-center"
-                    />
-                  </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-semibold text-gray-900 mb-1">{member.name}</h3>
-                    <p className="text-teal-700 font-medium mb-4">{member.position}</p>
-                    <p className="text-gray-600">{member.bio}</p>
-                  </div>
+              <div key={index} className="bg-white rounded-lg overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-shadow h-full">
+                <div className="h-64 overflow-hidden">
+                  <img 
+                    src={member.image} 
+                    alt={member.name} 
+                    className="w-full h-full object-cover object-center"
+                  />
                 </div>
-              </AnimatedSection>
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-1">{member.name}</h3>
+                  <p className="text-teal-700 font-medium mb-4">{member.position}</p>
+                  <p className="text-gray-600">{member.bio}</p>
+                </div>
+              </div>
             ))}
           </div>
         </AnimatedSection>
