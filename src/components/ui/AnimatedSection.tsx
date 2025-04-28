@@ -1,46 +1,57 @@
-import React, { ReactNode } from 'react';
-import { useIntersectionObserver } from '../../hooks/useIntersectionObserver';
+import React, { useEffect, useRef } from 'react';
+import { motion, useAnimation, useInView } from 'framer-motion';
 
 interface AnimatedSectionProps {
-  children: ReactNode;
-  className?: string;
-  animation?: 'fade-up' | 'fade-in' | 'slide-in-right' | 'slide-in-left';
+  children: React.ReactNode;
+  animation?: 'fade-up' | 'fade-in' | 'slide-in';
   delay?: number;
+  className?: string;
 }
 
-const AnimatedSection: React.FC<AnimatedSectionProps> = ({
-  children,
-  className = '',
-  animation = 'fade-up',
+const AnimatedSection: React.FC<AnimatedSectionProps> = ({ 
+  children, 
+  animation = 'fade-in', 
   delay = 0,
+  className = '' 
 }) => {
-  const [ref, isIntersecting] = useIntersectionObserver<HTMLDivElement>({
-    threshold: 0.1,
-    rootMargin: '0px 0px -100px 0px',
-  });
-
-  const animations = {
-    'fade-up': 'translate-y-10 opacity-0',
-    'fade-in': 'opacity-0',
-    'slide-in-right': 'translate-x-10 opacity-0',
-    'slide-in-left': 'translate-x-[-10px] opacity-0',
+  const controls = useAnimation();
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.2 });
+  
+  useEffect(() => {
+    if (isInView) {
+      controls.start('visible');
+    }
+  }, [controls, isInView]);
+  
+  const variants = {
+    hidden: {
+      opacity: 0,
+      y: animation === 'fade-up' ? 50 : 0,
+      x: animation === 'slide-in' ? -50 : 0,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      x: 0,
+      transition: {
+        duration: 0.6,
+        delay: delay,
+        ease: [0.22, 1, 0.36, 1],
+      }
+    }
   };
-
-  const baseStyles = 'transition-all duration-700 ease-out';
-  const animationStyle = animations[animation];
-
+  
   return (
-    <div
+    <motion.div
       ref={ref}
-      className={`${baseStyles} ${
-        isIntersecting
-          ? 'translate-y-0 translate-x-0 opacity-100'
-          : animationStyle
-      } ${className}`}
-      style={{ transitionDelay: `${delay}ms` }}
+      initial="hidden"
+      animate={controls}
+      variants={variants}
+      className={className}
     >
       {children}
-    </div>
+    </motion.div>
   );
 };
 

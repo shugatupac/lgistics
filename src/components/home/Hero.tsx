@@ -1,241 +1,154 @@
-import React, { useEffect, useState } from 'react';
-import { ArrowRight, Package, Globe, Truck } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ArrowRight, ArrowLeft, ChevronRight } from 'lucide-react';
 import Container from '../ui/Container';
 import Button from '../ui/Button';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Hero: React.FC = () => {
-  const [displayText, setDisplayText] = useState('');
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const fullText = "Navigating complex customs procedures with expertise and efficiency for businesses worldwide.";
-  
+  // Import Alpha Slab One font
   useEffect(() => {
-    if (currentIndex < fullText.length) {
-      const timeout = setTimeout(() => {
-        setDisplayText(prev => prev + fullText[currentIndex]);
-        setCurrentIndex(prev => prev + 1);
-      }, 50);
-      return () => clearTimeout(timeout);
-    }
-  }, [currentIndex, fullText]);
+    const link = document.createElement('link');
+    link.href = 'https://fonts.googleapis.com/css2?family=Alpha+Slab+One&display=swap';
+    link.rel = 'stylesheet';
+    document.head.appendChild(link);
+    
+    return () => {
+      document.head.removeChild(link);
+    };
+  }, []);
 
-  // 3D floating animation variants
-  const floatingAnimation = {
-    animate: {
-      y: [0, -10, 0],
-      transition: {
-        duration: 4,
-        repeat: Infinity,
-        repeatType: "reverse" as const,
-      }
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const totalSlides = 2;
+
+  const slides = [
+    {
+      id: 1,
+      title: "MOST AFFORDABLE WAY TO SHIP PRODUCTS",
+      image: "https://images.unsplash.com/photo-1494412651409-8963ce7935a7?q=80&w=3270&auto=format&fit=crop",
+      subtitle: "Enjoy effortless delivery on destination"
+    },
+    {
+      id: 2,
+      title: "RELIABLE LOGISTICS SOLUTIONS",
+      image: "https://images.unsplash.com/photo-1664707004094-6653e58a08cc?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      subtitle: "Track your shipments in real-time"
     }
+  ];
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % totalSlides);
   };
 
-  // Rotating animation variants
-  const rotatingAnimation = {
-    animate: {
-      rotateY: [0, 360],
-      transition: {
-        duration: 20,
-        repeat: Infinity,
-        ease: "linear"
-      }
-    }
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
   };
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900">
-      {/* Stronger overlay for better text visibility */}
-      <div className="absolute inset-0 bg-black/70"></div>
-      
-      {/* 3D Floating Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    <div className="relative h-screen overflow-hidden bg-teal-800 font-sans">
+      {/* Background Image with Overlay */}
+      <AnimatePresence mode="wait">
         <motion.div 
-          className="absolute top-[15%] right-[10%] z-10"
-          variants={floatingAnimation}
-          animate="animate"
-          style={{ filter: "drop-shadow(0 0 20px rgba(59, 130, 246, 0.7))" }}
-        >
-          <Globe className="w-10 h-10 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 text-blue-400 opacity-90" />
-        </motion.div>
-        
-        <motion.div 
-          className="absolute bottom-[20%] left-[15%] z-10"
-          variants={floatingAnimation}
-          animate="animate"
-          custom={1}
-          style={{ filter: "drop-shadow(0 0 20px rgba(59, 130, 246, 0.7))" }}
-        >
-          <Package className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 text-blue-300 opacity-80" />
-        </motion.div>
-        
-        <motion.div 
-          className="absolute top-[40%] left-[8%] z-10"
-          variants={floatingAnimation}
-          animate="animate"
+          key={currentSlide}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1 }}
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat" 
           style={{ 
-            perspective: "1000px",
-            filter: "drop-shadow(0 0 20px rgba(59, 130, 246, 0.7))"
+            backgroundImage: `url('${slides[currentSlide].image}')`,
+            backgroundPosition: "center",
+            backgroundSize: "cover",
           }}
         >
-          <Truck className="w-10 h-10 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 text-blue-500 opacity-90" />
+          {/* Darker overlay for better text visibility */}
+          <div className="absolute inset-0 bg-teal-900/70"></div>
         </motion.div>
-      </div>
-      
-      {/* Background Image with parallax effect */}
-      <motion.div 
-        initial={{ scale: 1.1 }}
-        animate={{ scale: 1 }}
-        transition={{ duration: 10 }}
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat" 
-        style={{ 
-          backgroundImage: "url('https://images.unsplash.com/photo-1688452987587-d38a58f9a405?q=80&w=3269&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
-          backgroundPosition: "center",
-          backgroundSize: "cover",
-          backgroundBlendMode: "overlay",
-        }}
-      ></motion.div>
+      </AnimatePresence>
 
-      <Container className="relative h-screen flex items-center justify-center">
-        <div className="max-w-3xl space-y-8 text-center">
+      <Container className="relative h-screen flex flex-col justify-between">
+        {/* Main Content */}
+        <div className="flex-1 flex items-center pt-24">
+          <div className="max-w-5xl">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentSlide}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5 }}
+              >
+                <h1 className="text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-white leading-tight uppercase" 
+                    style={{ 
+                      fontFamily: "'Alpha Slab One', cursive", 
+                      letterSpacing: '0.01em', 
+                      textShadow: '0 6px 12px rgba(0,0,0,0.6)',
+                      lineHeight: '1.05',
+                      fontWeight: 'bold'
+                    }}>
+                  {slides[currentSlide].title}
+                </h1>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </div>
+
+        {/* Slider Controls */}
+        <div className="pb-16 flex items-end justify-between">
+          <div className="flex items-center space-x-4">
+            <div className="bg-teal-800/80 backdrop-blur-sm rounded-lg p-2 flex items-center">
+              <div className="text-white text-sm mr-4 font-medium">
+                <span className="text-lime-300 text-lg" style={{ fontFamily: "'Alpha Slab One', cursive" }}>0{currentSlide + 1}</span> / 0{totalSlides}
+              </div>
+              
+              <div className="flex items-center">
+                <button 
+                  onClick={prevSlide}
+                  className="p-2 rounded-full hover:bg-teal-700 transition-colors"
+                >
+                  <ArrowLeft className="h-5 w-5 text-white" />
+                </button>
+                <div className="mx-2 text-white/30">|</div>
+                <button 
+                  onClick={nextSlide}
+                  className="p-2 rounded-full hover:bg-teal-700 transition-colors"
+                >
+                  <ArrowRight className="h-5 w-5 text-white" />
+                </button>
+              </div>
+            </div>
+            
+            <div className="bg-teal-800/80 backdrop-blur-sm rounded-lg p-4 max-w-xs">
+              <p className="text-white text-sm font-medium tracking-wide">
+                {slides[currentSlide].subtitle}
+              </p>
+            </div>
+          </div>
+          
+          {/* Floating Card */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="space-y-4"
+            transition={{ delay: 0.5, duration: 0.5 }}
+            className="absolute bottom-16 right-8 bg-teal-800/80 backdrop-blur-sm rounded-lg p-4 shadow-lg max-w-xs hidden md:block"
           >
-            {/* Large Text with 3D effect */}
-            <div className="mb-8">
-              <motion.h1 
-                className="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight mb-5"
-                style={{ 
-                  textShadow: '3px 3px 6px rgba(0,0,0,0.5)',
-                  perspective: "1000px"
-                }}
-              >
-                <motion.span 
-                  initial={{ opacity: 0, x: -50, rotateX: 45 }}
-                  animate={{ opacity: 1, x: 0, rotateX: 0 }}
-                  transition={{ duration: 0.8, delay: 0.2 }}
-                  className="block text-white transform-gpu"
-                  style={{ transformStyle: "preserve-3d" }}
-                >
-                  Your Gateway To
-                </motion.span>
-                <motion.span 
-                  initial={{ opacity: 0, x: -50, rotateX: 45 }}
-                  animate={{ opacity: 1, x: 0, rotateX: 0 }}
-                  transition={{ duration: 0.8, delay: 0.6 }}
-                  className="block transform-gpu"
-                  style={{ transformStyle: "preserve-3d" }}
-                >
-                  <span className="bg-gradient-to-r from-blue-700 via-blue-400 to-blue-700 text-transparent bg-clip-text" 
-                        style={{ filter: "drop-shadow(0 5px 15px rgba(59, 130, 246, 0.5))" }}>
-                    Global Trade
-                  </span>
-                </motion.span>
-                <motion.span 
-                  initial={{ opacity: 0, y: 30, rotateX: 45 }}
-                  animate={{ opacity: 1, y: 0, rotateX: 0 }}
-                  transition={{ duration: 0.8, delay: 1.0 }}
-                  className="block text-white transform-gpu"
-                  style={{ transformStyle: "preserve-3d" }}
-                >
-                  Excellence
-                </motion.span>
-              </motion.h1>
+            <div className="flex items-center mb-2">
+              <div className="w-8 h-8 rounded-full bg-lime-300 flex items-center justify-center mr-3">
+                <ChevronRight className="h-5 w-5 text-teal-900" />
+              </div>
+              <div>
+                <h3 className="text-white tracking-tight" style={{ fontFamily: "'Alpha Slab One', cursive", fontSize: '18px' }}>Delivery Solutions</h3>
+                <p className="text-white/70 text-xs font-medium">Your delivery data</p>
+              </div>
+              <div className="ml-auto text-white/70 text-xs font-medium">12:30</div>
             </div>
-
-            {/* Smaller Text with 3D effect */}
-            <motion.h2 
-              className="text-3xl md:text-3xl lg:text-4xl font-bold leading-tight"
-              style={{ 
-                textShadow: '3px 3px 6px rgba(0,0,0,0.5)',
-                perspective: "1000px"
-              }}
-            >
-              <motion.span 
-                initial={{ opacity: 0, y: 20, rotateX: 30 }}
-                animate={{ opacity: 1, y: 0, rotateX: 0 }}
-                transition={{ duration: 0.6, delay: 1.4 }}
-                className="block text-white transform-gpu"
-                style={{ transformStyle: "preserve-3d" }}
-              >
-                Streamlined
-              </motion.span>
-              <motion.span 
-                initial={{ opacity: 0, y: 20, rotateX: 30 }}
-                animate={{ opacity: 1, y: 0, rotateX: 0 }}
-                transition={{ duration: 0.6, delay: 1.8 }}
-                className="block transform-gpu"
-                style={{ transformStyle: "preserve-3d" }}
-              >
-                <span className="bg-gradient-to-r from-blue-700 via-blue-400 to-blue-700 text-transparent bg-clip-text"
-                      style={{ filter: "drop-shadow(0 5px 15px rgba(59, 130, 246, 0.5))" }}>
-                  Customs Clearance
-                </span>
-              </motion.span>
-              <motion.span 
-                initial={{ opacity: 0, y: 20, rotateX: 30 }}
-                animate={{ opacity: 1, y: 0, rotateX: 0 }}
-                transition={{ duration: 0.6, delay: 2.2 }}
-                className="block text-white transform-gpu"
-                style={{ transformStyle: "preserve-3d" }}
-              >
-                Solutions
-              </motion.span>
-            </motion.h2>
-          </motion.div>
-          
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 2.6 }}
-            className="relative h-20"
-          >
-            <p 
-              className="text-xl text-gray-100 absolute"
-              style={{ 
-                textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
-                borderRight: currentIndex < fullText.length ? '2px solid white' : 'none',
-              }}
-            >
-              {displayText}
-            </p>
-          </motion.div>
-          
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 3.0 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center"
-          >
-            <Link to="/services">
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button 
-                  variant="primary" 
-                  size="lg" 
-                  className="group bg-gradient-to-r from-blue-500 to-cyan-400 text-white border-none hover:from-blue-600 hover:to-cyan-500 transition-all duration-300"
-                  style={{ boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.5)" }}
-                >
-                  <span>Our Services</span>
-                  <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                </Button>
-              </motion.div>
-            </Link>
-            <Link to="/contact">
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button 
-                  variant="outline" 
-                  size="lg" 
-                  className="border-2 border-white text-white hover:bg-white/10 transition-all duration-300"
-                  style={{ boxShadow: "0 10px 25px -5px rgba(255, 255, 255, 0.2)" }}
-                >
-                  Contact Us
-                </Button>
-              </motion.div>
-            </Link>
+            <div className="rounded-lg overflow-hidden mt-2">
+              <img 
+                src="https://images.unsplash.com/photo-1494412651409-8963ce7935a7?q=80&w=3270&auto=format&fit=crop" 
+                alt="Cargo ship" 
+                className="w-full h-24 object-cover"
+              />
+            </div>
           </motion.div>
         </div>
       </Container>

@@ -4,20 +4,17 @@ import ContactForm from '../components/contact/ContactForm';
 import ContactInfo from '../components/contact/ContactInfo';
 import ContactMap from '../components/contact/ContactMap';
 import AnimatedSection from '../components/ui/AnimatedSection';
+import PageHero from '../components/ui/PageHero';
 
 const Contact: React.FC = () => {
   return (
-    <div className="pt-24 pb-20">
-      <div className="bg-primary py-16">
-        <Container>
-          <AnimatedSection>
-            <h1 className="text-4xl font-bold text-white mb-4">Contact Us</h1>
-            <p className="text-white/90 text-lg max-w-2xl">
-              Get in touch with our team for any inquiries or to discuss how we can help with your logistics needs.
-            </p>
-          </AnimatedSection>
-        </Container>
-      </div>
+    <div className="pb-20">
+      <PageHero 
+        title="Contact Us" 
+        subtitle="Get in touch with our team for any inquiries or to discuss how we can help with your logistics needs."
+        backgroundImage="https://images.unsplash.com/photo-1577416412292-f1b7b0e19fcd?q=80&w=3270&auto=format&fit=crop"
+        height="tall"
+      />
 
       <Container className="py-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -58,13 +55,35 @@ const Contact: React.FC = () => {
                 question: 'Can you help with special permits for restricted goods?',
                 answer: 'Absolutely. Our team has expertise in handling specialized permits and documentation for restricted or regulated items including pharmaceuticals, food products, and hazardous materials.',
               },
+              {
+                question: 'What are your service areas?',
+                answer: 'We operate globally with offices in major trade hubs across North America, Europe, Asia, and Australia, allowing us to provide seamless service worldwide.',
+              },
+              {
+                question: 'Do you offer insurance for shipments?',
+                answer: 'Yes, we provide comprehensive cargo insurance options to protect your goods during transit against loss, damage, or theft.',
+              },
+              {
+                question: 'How do I track my shipment?',
+                answer: 'You can track your shipment in real-time through our online portal or mobile app using your unique tracking number provided at the time of booking.',
+              },
+              {
+                question: 'What payment methods do you accept?',
+                answer: 'We accept all major credit cards, wire transfers, and corporate accounts with net payment terms for qualified businesses.',
+              },
+              {
+                question: 'Can you handle oversized or specialized cargo?',
+                answer: 'Yes, we specialize in handling oversized, heavy, and project cargo with our specialized equipment and experienced team.',
+              },
+              {
+                question: 'How do I get a quote for my shipment?',
+                answer: 'You can request a quote through our website, by calling our customer service team, or by emailing us with details of your shipment.',
+              }
             ].map((faq, index) => (
-              <AnimatedSection key={index} delay={index * 100} animation="fade-up">
-                <div className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm h-full">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">{faq.question}</h3>
-                  <p className="text-gray-600">{faq.answer}</p>
-                </div>
-              </AnimatedSection>
+              <div key={index} className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm h-full">
+                <h3 className="text-lg font-semibold text-gray-900 mb-3">{faq.question}</h3>
+                <p className="text-gray-600">{faq.answer}</p>
+              </div>
             ))}
           </div>
         </div>
