@@ -23,6 +23,11 @@ const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Close menu when route changes
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [location.pathname]);
+
   const navItems = [
     { to: '/', label: 'Home', isActive: location.pathname === '/' },
     { to: '/about', label: 'About', isActive: location.pathname === '/about' },
