@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Container from './Container';
 
@@ -27,18 +27,6 @@ const PageHero: React.FC<PageHeroProps> = ({
     };
   }, []);
 
-  // Track screen width for responsive font changes
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
   return (
     <div 
       className={`relative ${height === 'tall' ? 'h-[50vh]' : 'h-[30vh]'} min-h-[300px] overflow-hidden bg-teal-800`}
@@ -60,13 +48,7 @@ const PageHero: React.FC<PageHeroProps> = ({
           transition={{ duration: 0.5 }}
           className="pt-16"
         >
-          <h1 
-            className={`text-4xl md:text-5xl text-white font-bold mb-4 ${isMobile ? 'uppercase tracking-wide' : ''}`}
-            style={{ 
-              fontFamily: isMobile ? "Poppins, sans-serif" : "'Alpha Slab One', cursive",
-              textShadow: isMobile ? '0 2px 4px rgba(0,0,0,0.5)' : 'none'
-            }}
-          >
+          <h1 className="text-4xl md:text-5xl text-white font-bold mb-4 uppercase tracking-wide md:normal-case md:tracking-normal hero-title">
             {title}
           </h1>
           {subtitle && (

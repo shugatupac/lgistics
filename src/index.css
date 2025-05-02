@@ -16,3 +16,17 @@
   .animate-fadeInUp {
     animation: fadeInUp 0.8s ease-out forwards;
   }
+
+
+/* Add this to your global CSS file */
+.hero-title {
+  font-family: 'Poppins', sans-serif;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+@media (min-width: 768px) {
+  .hero-title {
+    font-family: 'Alpha Slab One', cursive;
+    text-shadow: none;
+  }
+}
