@@ -50,7 +50,7 @@ const PageHero: React.FC<PageHeroProps> = ({
           backgroundImage: `url('${backgroundImage}')`,
         }}
       >
-        <div className="absolute inset-0 bg-teal-900/70"></div>
+        <div className="absolute inset-0 bg-teal-900/80"></div>
       </div>
 
       <Container className="relative h-full flex flex-col justify-center">
@@ -61,9 +61,10 @@ const PageHero: React.FC<PageHeroProps> = ({
           className="pt-16"
         >
           <h1 
-            className="text-4xl md:text-5xl text-white font-bold mb-4" 
+            className={`text-4xl md:text-5xl text-white font-bold mb-4 ${isMobile ? 'uppercase tracking-wide' : ''}`}
             style={{ 
-              fontFamily: isMobile ? "Poppins, sans-serif" : "'Alpha Slab One', cursive"
+              fontFamily: isMobile ? "Poppins, sans-serif" : "'Alpha Slab One', cursive",
+              textShadow: isMobile ? '0 2px 4px rgba(0,0,0,0.5)' : 'none'
             }}
           >
             {title}
