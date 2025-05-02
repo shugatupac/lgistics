@@ -80,12 +80,13 @@ const Hero: React.FC = () => {
               >
                 <h1 className="text-5xl md:text-6xl lg:text-8xl xl:text-9xl text-white leading-tight uppercase" 
                     style={{ 
-                      fontFamily: "'Alpha Slab One'", 
+                      fontFamily: "'Alpha Slab One, 'Cursive'", 
                       letterSpacing: '0.01em', 
                       textShadow: '0 6px 12px rgba(0,0,0,0.6)',
                       lineHeight: '1.05',
                       fontWeight: 'bold'
                     }}>
+                      
                   {slides[currentSlide].title}
                 </h1>
               </motion.div>
