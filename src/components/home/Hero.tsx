@@ -78,7 +78,7 @@ const Hero: React.FC = () => {
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.5 }}
               >
-                <h1 className="text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-white leading-tight uppercase" 
+                <h1 className="text-5xl md:text-6xl lg:text-8xl xl:text-9xl text-white leading-tight uppercase" 
                     style={{ 
                       fontFamily: "'Alpha Slab One'", 
                       letterSpacing: '0.01em', 
